@@ -1,6 +1,6 @@
 import { useRef } from "react";
-import { FiCheckSquare } from "react-icons/fi";
 import { SubmitHandler, FormHandles } from "@unform/core";
+import { FiCheckSquare } from "react-icons/fi";
 
 import { Form } from "./styles";
 import { Modal } from "../Modal";
@@ -17,41 +17,36 @@ interface FoodType {
 
 type FoodInput = Omit<FoodType, "id" | "available">;
 
-interface ModalEditFoodProps {
+interface ModalAddFoodProps {
   isOpen: boolean;
   setIsOpen: () => void;
-  editingFood: FoodType;
-  handleUpdateFood: (food: FoodInput) => Promise<void>;
+  handleAddFood: (food: FoodInput) => Promise<void>;
 }
 
-export function ModalEditFood({
+export function ModalAddFood({
   isOpen,
   setIsOpen,
-  editingFood,
-  handleUpdateFood,
-}: ModalEditFoodProps) {
+  handleAddFood,
+}: ModalAddFoodProps) {
   const formRef = useRef<FormHandles>(null);
 
-  // async function handleSubmit(data: FoodType) {
-  //   handleUpdateFood(data);
-  //   setIsOpen();
-  // }
-
   const handleSubmit: SubmitHandler<FoodInput> = async (data) => {
-    handleUpdateFood(data);
+    handleAddFood(data);
     setIsOpen();
   };
 
   return (
     <Modal isOpen={isOpen} setIsOpen={setIsOpen}>
-      <Form ref={formRef} onSubmit={handleSubmit} initialData={editingFood}>
-        <h1>Editar Prato</h1>
+      <Form ref={formRef} onSubmit={handleSubmit}>
+        <h1>Novo Prato</h1>
         <Input name="image" placeholder="Cole o link aqui" />
+
         <Input name="name" placeholder="Ex: Moda Italiana" />
         <Input name="price" placeholder="Ex: 19.90" />
+
         <Input name="description" placeholder="Descrição" />
-        <button type="submit" data-testid="edit-food-button">
-          <div className="text">Editar Prato</div>
+        <button type="submit" data-testid="add-food-button">
+          <p className="text">Adicionar Prato</p>
           <div className="icon">
             <FiCheckSquare size={24} />
           </div>
@@ -61,36 +56,35 @@ export function ModalEditFood({
   );
 }
 
-// class ModalEditFood extends Component {
+// class ModalAddFood extends Component {
 //   constructor(props) {
 //     super(props);
 
-//     this.formRef = createRef()
+//     this.formRef = createRef();
 //   }
 
-//   handleSubmit = async (data) => {
-//     const { setIsOpen, handleUpdateFood } = this.props;
+//   handleSubmit = async data => {
+//     const { setIsOpen, handleAddFood } = this.props;
 
-//     handleUpdateFood(data);
+//     handleAddFood(data);
 //     setIsOpen();
 //   };
 
 //   render() {
-//     const { isOpen, setIsOpen, editingFood } = this.props;
+//     const { isOpen, setIsOpen } = this.props;
 
 //     return (
 //       <Modal isOpen={isOpen} setIsOpen={setIsOpen}>
-//         <Form ref={this.formRef} onSubmit={this.handleSubmit} initialData={editingFood}>
-//           <h1>Editar Prato</h1>
+//         <Form ref={this.formRef} onSubmit={this.handleSubmit}>
+//           <h1>Novo Prato</h1>
 //           <Input name="image" placeholder="Cole o link aqui" />
 
 //           <Input name="name" placeholder="Ex: Moda Italiana" />
 //           <Input name="price" placeholder="Ex: 19.90" />
 
 //           <Input name="description" placeholder="Descrição" />
-
-//           <button type="submit" data-testid="edit-food-button">
-//             <div className="text">Editar Prato</div>
+//           <button type="submit" data-testid="add-food-button">
+//             <p className="text">Adicionar Prato</p>
 //             <div className="icon">
 //               <FiCheckSquare size={24} />
 //             </div>
@@ -101,4 +95,4 @@ export function ModalEditFood({
 //   }
 // };
 
-// export default ModalEditFood;
+// export default ModalAddFood;
